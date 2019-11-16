@@ -1,0 +1,64 @@
+  
+{
+    "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended"],
+    "plugins": ["jsx-a11y"],
+    "rules": {
+      "react/require-default-props": "off",
+      "react/jsx-props-no-spreading": "off",
+      "import/prefer-default-export": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "curly": ["error", "multi", "consistent"],
+      "nonblock-statement-body-position": ["error", "any"],
+      "prefer-destructuring": ["error", {"object": true, "array": false}],
+      "no-this-before-super": "warn",
+      "no-undef": "warn",
+      "no-unreachable": "warn",
+      "no-unused-vars": "warn",
+      "constructor-super": "warn",
+      "valid-typeof": "warn",
+      "no-underscore-dangle": 0,
+      "function-paren-newline": 0,
+      "indent": [2, 4, {
+          "SwitchCase": 1
+      }],
+      "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
+      "linebreak-style": [2, "windows"],
+      "comma-dangle": [2, "never"],
+      "require-jsdoc": [2, {
+          "require": {
+              "FunctionDeclaration": true,
+              "MethodDefinition": true,
+              "ClassDeclaration": true,
+              "ArrowFunctionExpression": true
+          }
+      }],
+      "space-before-function-paren": [2, {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "always"
+      }],
+      "no-trailing-spaces": 2,
+      "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+      "no-const-assign": 2,
+      "func-style": [2, "expression"],
+      "func-names": [2, "as-needed"],
+      "max-statements": 1,
+      "complexity": 1,
+      "max-depth": 1,
+      "max-lines": 1,
+      "max-len": [1, 150],
+      "max-params": [1, { "max": 4 }],
+      "max-nested-callbacks": 1,
+      "operator-linebreak": ["error", "after"],
+      "valid-jsdoc": [1, { "requireReturn": false, "requireReturnDescription": false }],
+      "react/jsx-uses-react": 1,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/jsx-indent": [1, 4],
+      "react/jsx-indent-props": [1, 4],
+      "jsx-a11y/anchor-is-valid": [2, {
+          "components": ["Link"],
+          "specialLink": ["to"],
+          "aspects": ["noHref", "invalidHref", "preferButton"]
+      }]
+  }
+}
