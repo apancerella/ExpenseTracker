@@ -23,7 +23,12 @@ app.use(async (req, res, next) => {
   next();
 });
 
+
+if(AppConfigs.environment === 'production')
+  app.use('/', express.static('../client/build'));
+
 app.use('/api', routes);
+
 
 connectDb(AppConfigs.database).then(async () => {
   if (AppConfigs.eraseDatabaseOnSync) {
