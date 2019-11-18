@@ -12,8 +12,8 @@ import seed from './seed_data';
 
 const app = express();
 
-app.use(cors());
-app.use(compression());
+// app.use(cors());
+// app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,7 +25,8 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api', routes);
-
+console.log("************************************************************")
+console.log(AppConfigs.environment)
 if(AppConfigs.environment === 'production'){
   app.use(express.static('../client/build'));
   app.get('*', () => (req, res) => {
