@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import express from 'express';
 import compression from 'compression';
+import path from 'path';
 
 import AppConfigs from './configs';
 import models, { connectDb } from './models';
@@ -23,11 +24,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
-
-if(AppConfigs.environment === 'production')
-  app.use('/', express.static('../client/build'));
-
 app.use('/api', routes);
+
+if(AppConfigs.environment === 'production'){
+  app.use(express.static('../client/build'));
+  app.get('*', () => (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
+  });
+}
+
 
 
 connectDb(AppConfigs.database).then(async () => {
@@ -51,7 +56,7 @@ connectDb(AppConfigs.database).then(async () => {
     await seed.createAccounts();
   }
 
-  app.listen(AppConfigs.port, () =>
-    console.log(`Example app listening on port ${AppConfigs.port}!`),
+  app.listen(process.env.PORT || 3000, () =>
+    console.log(`Example app listening on port ${process.env.PORT || 3000}!`),
   );
 });
