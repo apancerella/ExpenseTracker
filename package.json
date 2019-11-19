@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf build && mkdir build",
-    "build-babel": "babel -d ./build ./src/server -s",
+    "build-client": "cd src/client && rimraf build && npm install && npm run build",
+    "clean": "rimraf src/server/build",
+    "build-babel": "babel -d ./src/server/build ./src/server -s",
     "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/index.js",
-    "start-dev": "nodemon --exec babel-node src/server/index.js",
-    "heroku-postbuild": "cd src/client && npm install && npm run build"
+    "start": "npm run build-client && npm run build && node ./src/server/build/index.js",
+    "start-dev": "nodemon --exec babel-node src/server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,13 +20,14 @@
     "@babel/node": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/runtime": "^7.7.2",
+    "mkdirp": "^0.5.1",
     "nodemon": "^1.18.9",
     "rimraf": "^3.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
     "babel-node": "0.0.1-security",
-    "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
