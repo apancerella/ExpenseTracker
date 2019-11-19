@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-client": "cd src/client && rimraf build && npm install && npm run build",
-    "clean": "rimraf src/server/build",
     "build-babel": "babel -d ./src/server/build ./src/server -s",
-    "build": "npm run clean && npm run build-babel",
+    "build": "rimraf src/server/build && npm run build-babel",
     "start": "npm run build && node ./src/server/build/index.js",
-    "start-dev": "nodemon --exec babel-node src/server/index.js"
+    "start-dev": "nodemon --exec babel-node src/server/index.js",
+    "heroku-postbuild": "cd src/client && rimraf build && npm install && npm run build"
   },
   "keywords": [],
   "author": "",

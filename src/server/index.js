@@ -23,8 +23,8 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api', routes);
-
-if(AppConfigs.environment === 'development'){
+app.get('/test', (req, res) => ("hello"));
+if(AppConfigs.environment === 'production'){
   app.use(express.static(path.join(__dirname, '../../client/build')));
   app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/build/index.html'));
