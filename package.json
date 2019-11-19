@@ -8,7 +8,7 @@
     "clean": "rimraf src/server/build",
     "build-babel": "babel -d ./src/server/build ./src/server -s",
     "build": "npm run clean && npm run build-babel",
-    "start": "npm run build-client && npm run build && node ./src/server/build/index.js",
+    "start": "npm run build && node ./src/server/build/index.js",
     "start-dev": "nodemon --exec babel-node src/server/index.js"
   },
   "keywords": [],
