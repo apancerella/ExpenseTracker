@@ -21,6 +21,10 @@ app.use(async (req, res, next) => {
   req.context = { models };
   next();
 });
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: Welcome });
+});
 app.use('/api', routes);
 
 // if(AppConfigs.environment === 'production'){
