@@ -22,18 +22,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: Welcome });
-});
 app.use('/api', routes);
 
-// if(AppConfigs.environment === 'production'){
-//   app.use(express.static('../client/build'));
-//   app.get('*', () => (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
-//   });
-//   console.log(path.join(__dirname, '../client', 'build', 'index.html'))
-// }
+if(AppConfigs.environment === 'production'){
+  app.use(express.static('../client/build'));
+
+  app.get('/', () => (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
+  });
+}
 
 app.listen(AppConfigs.port, () =>
   console.log(`Example app listening on port ${AppConfigs.port}!`),
