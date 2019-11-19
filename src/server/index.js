@@ -13,7 +13,7 @@ const app = express();
 
 connectDb(AppConfigs.database, AppConfigs.eraseDatabaseOnSync);
 
-// app.use(cors());
+app.use(cors());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +23,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api', routes);
-app.get('/test', (req, res) => ("hello"));
+
 if(AppConfigs.environment === 'production'){
   app.use(express.static(path.join(__dirname, '../../client/build')));
   app.get('/*', (req, res) => {

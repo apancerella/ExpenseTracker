@@ -12,7 +12,7 @@ export default class apiCalls {
     static Get = async (action) => {
         const response = await fetch(action.url, {
             method: 'get',
-            credentials: 'include',
+            // credentials: 'include',
             accept: 'gzip',
             headers: {
                 'Cache-Control': 'no-cache',

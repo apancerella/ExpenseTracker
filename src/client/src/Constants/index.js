@@ -12,13 +12,13 @@ const AppEnvConfigs = (() => {
         return {
             appName: 'Expense Tracker',
             siteCollectionPath: '/ExpenseTracker',
-            apiDomain: ''
+            apiDomain: 'https://expensetrackermern.herokuapp.com/api'
         };
 
     return {
         appName: 'Expense Tracker',
         siteCollectionPath: '/ExpenseTracker',
-        apiDomain: 'https://localhost:5001/api'
+        apiDomain: 'http://localhost:8080/api'
     };
 })();
 
