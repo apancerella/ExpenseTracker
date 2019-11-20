@@ -7,14 +7,8 @@ router.get('/', async (req, res) => {
   return res.send(accounts);
 });
 
-router.get('/:firstName/:lastName', async (req, res) => {
-  let firstName = req.params.firstName;
-  let lastName = req.params.lastName;
-  const account = await req.context.models.Account.findOne({
-    FirstName: firstName,
-    LastName: lastName
-  });
-  console.log(acc)
+router.get('/:id', async (req, res) => {
+  const account = await req.context.models.Account.findById(req.params.id);
   return res.send(account);
 });
 

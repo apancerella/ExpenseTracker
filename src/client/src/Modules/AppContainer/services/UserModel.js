@@ -19,9 +19,8 @@ const user = {
     effects: (dispatch) => ({
         async fetchUserAccount(payload, state) {
             try {
-                console.log(await Api.Get({ url: `${apiEndpoint}/` }))
                 this.populateAccount(
-                    await Api.Get({ url: `${apiEndpoint}/` })
+                    await Api.Get({ url: `${apiEndpoint}/5dd44d622d6cfc9e24edcd12` })
                 );
             } catch (error) {
                 dispatch.notification.addErrorNotification(`Unable`)
