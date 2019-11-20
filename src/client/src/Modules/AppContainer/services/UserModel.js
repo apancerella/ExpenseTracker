@@ -5,8 +5,8 @@ const apiEndpoint = `${Constants.apiDomain}/Accounts`;
 
 const user = {
     state: {
-        account: Account_Seed
-        // account: {}
+        // account: Account_Seed
+        account: {}
     },
     reducers: {
         populateAccount(state, account) {
@@ -19,11 +19,9 @@ const user = {
     effects: (dispatch) => ({
         async fetchUserAccount(payload, state) {
             try {
-
-                console.log(await Api.Get({ url: `${apiEndpoint}/` }))
-                // this.populateAccount(
-                //     await Api.Get({ url: `${apiEndpoint}/` })
-                // );
+                this.populateAccount(
+                    await Api.Get({ url: `${apiEndpoint}/Anthony/Pancerella` })
+                );
             } catch (error) {
                 dispatch.notification.addErrorNotification(`Unable`)
             }

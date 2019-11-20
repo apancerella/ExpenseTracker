@@ -12,7 +12,7 @@ const AppEnvConfigs = (() => {
         return {
             appName: 'Expense Tracker',
             siteCollectionPath: '/ExpenseTracker',
-            apiDomain: 'https://expensetrackermern.herokuapp.com/api'
+            apiDomain: '/api'
         };
 
     return {
