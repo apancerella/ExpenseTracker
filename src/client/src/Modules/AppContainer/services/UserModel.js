@@ -20,7 +20,7 @@ const user = {
         async fetchUserAccount(payload, state) {
             try {
                 this.populateAccount(
-                    await Api.Get({ url: `${apiEndpoint}/Anthony/Pancerella` })
+                    await Api.Get({ url: `${apiEndpoint}/` })
                 );
             } catch (error) {
                 dispatch.notification.addErrorNotification(`Unable`)
