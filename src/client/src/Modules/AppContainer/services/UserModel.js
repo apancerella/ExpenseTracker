@@ -19,6 +19,7 @@ const user = {
     effects: (dispatch) => ({
         async fetchUserAccount(payload, state) {
             try {
+                console.log(await Api.Get({ url: `${apiEndpoint}/` }))
                 this.populateAccount(
                     await Api.Get({ url: `${apiEndpoint}/` })
                 );
