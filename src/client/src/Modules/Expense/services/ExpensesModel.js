@@ -1,15 +1,12 @@
 import Api from '../../../Lib/ApiCalls';
 import Constants from '../../../Constants';
-import { ExpenseTypes_Seed, MonthlyExpenses_Seed } from '../../../Seed_Data';
 
 const apiEndpoint = `${Constants.apiDomain}/MonthlyExpenses`;
 
 const expense = {
     state: {
-        expenseTypes: ExpenseTypes_Seed,
-        monthlyExpenseList: MonthlyExpenses_Seed
-        // expenseTypes: [],
-        // monthlyExpenseList: []
+        expenseTypes: [],
+        monthlyExpenseList: []
     },
     reducers: {
         populateExpenseList(state, expenses) {
@@ -48,18 +45,18 @@ const expense = {
     effects: (dispatch) => ({
         async fetchMonthlyExpenses(payload, state) {
             try {
-                // this.populateExpenseList(
-                //     await Api.Get({ url: `${apiEndpoint}` })
-                // );
+                this.populateExpenseList(
+                    await Api.Get({ url: `${apiEndpoint}` })
+                );
             } catch (error) {
                 dispatch.notification.addErrorNotification('Unable to fetch monthly expenses.');
             }
         },
         async fetchExpenseTypes(payload, state) {
             try {
-                // this.populateExpenseTypes(
-                //     await Api.Get({ url: `${Constants.apiDomain}/ExpenseTypes` })
-                // );
+                this.populateExpenseTypes(
+                    await Api.Get({ url: `${Constants.apiDomain}/ExpenseTypes` })
+                );
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to fetch expense types.');
@@ -67,17 +64,8 @@ const expense = {
         },
         async createExpenseEntry(payload, state) {
             try {
-                let expense = {
-                    ExpenseTypeId: payload.ExpenseTypeId,
-                    ExpenseType: state.expense.expenseTypes.find(x => x.Id === payload.ExpenseTypeId),
-                    Name: payload.Name,
-                    Amount: payload.Amount,
-                    Description: payload.Description || "",
-                    Id: (state.expense.monthlyExpenseList.reduce((prev, curr) => (prev.Id > curr.Id ? prev.Id : curr.Id), 0)) + 1              
-                };
-                this.addExpense(expense)
-                // await Api.Post({ url: `${apiEndpoint}`, body: payload })
-                // this.fetchMonthlyExpenses();
+                await Api.Post({ url: `${apiEndpoint}`, body: payload })
+                this.fetchMonthlyExpenses();
                 dispatch.notification.addSuccessNotification('Expense entry has been created.');
             }
             catch (error) {
@@ -86,13 +74,8 @@ const expense = {
         },
         async updateExpenseEntry(payload, state) {
             try {
-                let expense = {
-                    ...payload,
-                    "ExpenseType": state.expense.expenseTypes.find(x => x.Id === payload.ExpenseTypeId),
-                };
-                this.updateExpense(expense);
-                // await Api.Put({ url: `${apiEndpoint}/${payload.Id}`, body: payload })
-                // this.fetchMonthlyExpenses();
+                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload })
+                this.fetchMonthlyExpenses();
                 dispatch.notification.addSuccessNotification('Expense entry has been updated.');
             }
             catch (error) {
@@ -101,9 +84,8 @@ const expense = {
         },
         async deleteExpenseEntry(payload, state) {
             try {
-                this.deleteExpense(payload);
-                // await Api.Delete({ url: `${apiEndpoint}/${payload}` })
-                // this.fetchMonthlyExpenses();
+                await Api.Delete({ url: `${apiEndpoint}/${payload}` })
+                this.fetchMonthlyExpenses();
                 dispatch.notification.addSuccessNotification('Expense entry has been deleted.');
             }
             catch (error) {

@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  FirstName: String,
-  MiddleName: String,
-  LastName: String,
-  Email: String,
-  ModifiedDate: Date,
-  ModifiedBy: String,
-  DateOfBirth: Date,
-  Phone: String,
-  Role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", index: true }
+    FirstName: String,
+    MiddleName: String,
+    LastName: String,
+    Email: String,
+    ModifiedDate: Date,
+    ModifiedBy: String,
+    DateOfBirth: Date,
+    Phone: String,
+    Role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role', index: true }
 });
 
 // userSchema.statics.findByLogin = async function(login) {

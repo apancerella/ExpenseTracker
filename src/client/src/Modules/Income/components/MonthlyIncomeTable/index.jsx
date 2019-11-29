@@ -17,7 +17,7 @@ import './style.css';
 const MonthlyIncomeTable = () => {
     const dispatch = useDispatch();
     const [showIncomeModal, setShowIncomeModal] = useState(false);
-    const [incomeId, setIncomeId] = useState(0);
+    const [incomeId, setIncomeId] = useState(null);
     const monthlyIncomeList = useSelector((state) => state.income.monthlyIncomeList);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const MonthlyIncomeTable = () => {
     }, []);
 
     const tableOutline = [{
-        dataField: 'Id',
+        dataField: '_id',
         text: 'Id',
         hidden: true,
         sort: true,
@@ -63,7 +63,7 @@ const MonthlyIncomeTable = () => {
                 type="button"
                 label="Edit"
                 onClick={() => {
-                    setIncomeId(row.Id);
+                    setIncomeId(row._id);
                     setShowIncomeModal(!showIncomeModal);
                 }}
                 btnPaddingTop={0}
@@ -83,7 +83,7 @@ const MonthlyIncomeTable = () => {
                 color="danger"
                 type="button"
                 label="Delete"
-                onClick={() => dispatch.income.deleteIncomeEntry(row.Id)}
+                onClick={() => dispatch.income.deleteIncomeEntry(row._id)}
                 btnPaddingTop={0}
                 btnPaddingBottom={0}
                 icon="trash-alt"
@@ -100,7 +100,7 @@ const MonthlyIncomeTable = () => {
                 type="button"
                 label="Create New"
                 onClick={() => {
-                    setIncomeId(0);
+                    setIncomeId(null);
                     setShowIncomeModal(!showIncomeModal);
                 }}
                 btnPaddingTop={2}
@@ -108,7 +108,7 @@ const MonthlyIncomeTable = () => {
                 icon="plus"
             />
             <Table
-                keyValue="Id"
+                keyValue="_id"
                 columns={tableOutline}
                 list={monthlyIncomeList}
                 loading={false}
@@ -118,7 +118,7 @@ const MonthlyIncomeTable = () => {
                 show={showIncomeModal}
                 toggleFunc={(show) => {
                     setShowIncomeModal(show);
-                    setIncomeId(0);
+                    setIncomeId(null);
                 }}
             />
         </>

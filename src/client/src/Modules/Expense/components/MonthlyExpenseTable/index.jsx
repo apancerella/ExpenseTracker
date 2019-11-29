@@ -17,7 +17,7 @@ import './style.css';
 const MonthlyExpenseTable = () => {
     const dispatch = useDispatch();
     const [showExpenseModal, setShowExpenseModal] = useState(false);
-    const [expenseId, setExpenseId] = useState(0);
+    const [expenseId, setExpenseId] = useState(null);
     const monthlyExpenseList = useSelector((state) => state.expense.monthlyExpenseList);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const MonthlyExpenseTable = () => {
     }, []);
 
     const tableOutline = [{
-        dataField: 'Id',
+        dataField: '_id',
         text: 'Id',
         hidden: true,
         sort: true,
@@ -71,7 +71,7 @@ const MonthlyExpenseTable = () => {
                 type="button"
                 label="Edit"
                 onClick={() => {
-                    setExpenseId(row.Id);
+                    setExpenseId(row._id);
                     setShowExpenseModal(!showExpenseModal);
                 }}
                 btnPaddingTop={0}
@@ -91,7 +91,7 @@ const MonthlyExpenseTable = () => {
                 color="danger"
                 type="button"
                 label="Delete"
-                onClick={() => dispatch.expense.deleteExpenseEntry(row.Id)}
+                onClick={() => dispatch.expense.deleteExpenseEntry(row._id)}
                 btnPaddingTop={0}
                 btnPaddingBottom={0}
                 icon="trash-alt"
@@ -108,7 +108,7 @@ const MonthlyExpenseTable = () => {
                 type="button"
                 label="Create New"
                 onClick={() => {
-                    setExpenseId(0);
+                    setExpenseId(null);
                     setShowExpenseModal(!showExpenseModal);
                 }}
                 btnPaddingTop={2}
@@ -116,7 +116,7 @@ const MonthlyExpenseTable = () => {
                 icon="plus"
             />
             <Table
-                keyValue="Id"
+                keyValue="_id"
                 columns={tableOutline}
                 list={monthlyExpenseList}
                 loading={false}
@@ -126,7 +126,7 @@ const MonthlyExpenseTable = () => {
                 show={showExpenseModal}
                 toggleFunc={(show) => {
                     setShowExpenseModal(show);
-                    setExpenseId(0);
+                    setExpenseId(null);
                 }}
             />
         </>

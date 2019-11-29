@@ -17,22 +17,21 @@ const createExpenseTypes = async () => {
     const expenseType14 = new models.ExpenseType({ ExpenseType: 'Entertainment' });
     const expenseType15 = new models.ExpenseType({ ExpenseType: 'Housing' });
 
-  
     await expenseType1.save();
     await expenseType2.save();
-    await expenseType3.save(); 
-    await expenseType4.save(); 
-    await expenseType5.save(); 
-    await expenseType6.save(); 
-    await expenseType7.save(); 
-    await expenseType8.save(); 
-    await expenseType9.save(); 
+    await expenseType3.save();
+    await expenseType4.save();
+    await expenseType5.save();
+    await expenseType6.save();
+    await expenseType7.save();
+    await expenseType8.save();
+    await expenseType9.save();
     await expenseType10.save();
     await expenseType11.save();
     await expenseType12.save();
     await expenseType13.save();
     await expenseType14.save();
     await expenseType15.save();
-  };
+};
 
 export default createExpenseTypes;

@@ -1,11 +1,9 @@
 import Api from '../../../Lib/ApiCalls';
 import Constants from '../../../Constants';
-import { Account_Seed } from '../../../Seed_Data';
 const apiEndpoint = `${Constants.apiDomain}/Accounts`;
 
 const user = {
     state: {
-        // account: Account_Seed
         account: {}
     },
     reducers: {
@@ -23,7 +21,7 @@ const user = {
                     await Api.Get({ url: `${apiEndpoint}/5dd44d622d6cfc9e24edcd12` })
                 );
             } catch (error) {
-                dispatch.notification.addErrorNotification(`Unable`)
+                dispatch.notification.addErrorNotification(`Unable to fetch your account`)
             }
         }
     })

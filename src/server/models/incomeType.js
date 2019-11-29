@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 const incomeTypeSchema = new mongoose.Schema({
-  IncomeType: {
-    type: String,
-    unique: true,
-  }
+    IncomeType: {
+        type: String,
+        unique: true
+    }
 });
 
 const IncomeType = mongoose.model('IncomeType', incomeTypeSchema);

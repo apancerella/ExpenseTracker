@@ -42,10 +42,27 @@ export const useArray = (initialArray) => {
         setValue,
         add: (a) => setValue((v) => [...v, a]),
         clear: () => setValue(() => []),
-        removeById: (id) => setValue((arr) => arr.filter((v) => v && v.id !== id)),
+        removeById: (id) => setValue((arr) => arr.filter((v) => v && v._id !== id)),
         removeIndex: (index) => setValue((v) => [...v.slice(0, index), ...v.slice(index + 1)])
     };
 };
+
+/**
+ * Used to build a nested object off of an array of prop names
+ * @param {*} obj 
+ * @param {*} keyPath 
+ * @param {*} value 
+ */
+const assign = (obj, keyPath, value) => {
+    let lastKeyIndex = keyPath.length-1;
+    for (var i = 0; i < lastKeyIndex; ++ i) {
+      let key = keyPath[i];
+      if (!(key in obj))
+        obj[key] = {}
+      obj = obj[key];
+    }
+    obj[keyPath[lastKeyIndex]] = value;
+ }
 
 /**
  * A hook to manage form input.
@@ -86,20 +103,22 @@ export const useForm = (initialValues, validate, submit) => {
         if (event.persist)
             event.persist();
 
-        setFormValues((valuesState) => ({
-            ...valuesState,
-            [event.target.name]: event.target.value
-        }));
+        //This is use to populate nested props.
+        if(Array.isArray(event.target.name)){
+            let nestedObj = {};
+            assign(nestedObj, event.target.name, event.target.value);
+            setFormValues((valuesState) => ({
+                ...valuesState,
+                ...nestedObj
+            }));       
+        }
+        else {
+            setFormValues((valuesState) => ({
+                ...valuesState,
+                [event.target.name]: event.target.value
+            }));
+        }
     };
-
-    /**
-     * Sets the 'formValues' value if initialValues is defined
-     * as something other than an empty object.
-     */
-    // useEffect(() => {
-    //     if (!isEquivalent(formValues, initialValues))// && !isCreateForm)
-    //         setFormValues(initialValues);
-    // }, [initialValues]);
 
     /**
      * Calls the submit function if there are no errors

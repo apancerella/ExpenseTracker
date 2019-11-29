@@ -1,15 +1,12 @@
 import Api from '../../../Lib/ApiCalls';
 import Constants from '../../../Constants';
-import { IncomeTypes_Seed, MonthlyIncomes_Seed } from '../../../Seed_Data';
 
-const apiEndpoint = `${Constants.apiDomain}/MonthlyIncomes`;
+const apiEndpoint = `${Constants.apiDomain}/monthlyIncomes`;
 
 const income = {
     state: {
-        incomeTypes: IncomeTypes_Seed,
-        monthlyIncomeList: MonthlyIncomes_Seed
-        // incomeTypes: [],
-        // monthlyIncomeList: []
+        incomeTypes: [],
+        monthlyIncomeList: []
     },
     reducers: {
         populateIncomeList(state, incomes) {
@@ -48,9 +45,9 @@ const income = {
     effects: (dispatch) => ({
         async fetchMonthlyIncomes(payload, state) {
             try {
-                // this.populateIncomeList(
-                //     await Api.Get({ url: `${apiEndpoint}` })
-                // );
+                this.populateIncomeList(
+                    await Api.Get({ url: `${apiEndpoint}` })
+                );
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to fetch monthly income.');
@@ -58,9 +55,9 @@ const income = {
         },
         async fetchIncomeTypes(payload, state) {
             try {
-                // this.populateIncomeTypes(
-                //     await Api.Get({ url: `${Constants.apiDomain}/IncomeTypes` })
-                // );
+                this.populateIncomeTypes(
+                    await Api.Get({ url: `${Constants.apiDomain}/incomeTypes` })
+                );
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to fetch income types.');
@@ -68,17 +65,8 @@ const income = {
         },
         async createIncomeEntry(payload, state) {
             try {
-                let income = {
-                    IncomeTypeId: payload.IncomeTypeId,
-                    IncomeType: state.income.incomeTypes.find(x => x.Id === payload.IncomeTypeId),
-                    Name: payload.Name,
-                    Amount: payload.Amount,
-                    Description: payload.Description || "",
-                    Id: (state.income.monthlyIncomeList.reduce((prev, curr) => (prev.Id > curr.Id ? prev.Id : curr.Id), 0)) + 1              
-                };
-                this.addIncome(income)
-                // await Api.Post({ url: `${apiEndpoint}`, body: payload })
-                // this.fetchMonthlyIncomes();
+                await Api.Post({ url: `${apiEndpoint}`, body: payload })
+                this.fetchMonthlyIncomes();
                 dispatch.notification.addSuccessNotification('Income entry has been created.');
             }
             catch (error) {
@@ -87,14 +75,8 @@ const income = {
         },
         async updateIncomeEntry(payload, state) {
             try {
-                let income = {
-                    ...payload,
-                    "IncomeType": state.income.incomeTypes.find(x => x.Id === payload.IncomeTypeId),
-                };
-                this.updateIncome(income);
-
-                // await Api.Put({ url: `${apiEndpoint}/${payload.Id}`, body: payload })
-                // this.fetchMonthlyIncomes();
+                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload })
+                this.fetchMonthlyIncomes();
                 dispatch.notification.addSuccessNotification('Income entry has been updated.');
             }
             catch (error) {
@@ -103,9 +85,8 @@ const income = {
         },
         async deleteIncomeEntry(payload, state) {
             try {
-                this.deleteIncome(payload);
-                // await Api.Delete({ url: `${apiEndpoint}/${payload}` })
-                // this.fetchMonthlyIncomes();
+                await Api.Delete({ url: `${apiEndpoint}/${payload}` })
+                this.fetchMonthlyIncomes();
                 dispatch.notification.addSuccessNotification('Income entry has been deleted.');
             }
             catch (error) {

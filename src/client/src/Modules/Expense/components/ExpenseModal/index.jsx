@@ -19,7 +19,7 @@ import { useForm } from '../../../../Lib/CustomHooks';
  * The ExpenseModal component.
  * @returns {React.Element}
  */
-const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
+const ExpenseModal = ({ expenseId, show = false, toggleFunc = null }) => {
     const dispatch = useDispatch();
     const expenseTypes = useSelector((state) => state.expense.expenseTypes)
 
@@ -32,7 +32,7 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
         const errors = {};
         if (!values.Name) errors.Name = 'Name is required';
 
-        if (!values.ExpenseTypeId) errors.ExpenseTypeId = 'Expense type is required';
+        if (!values.ExpenseType) errors.ExpenseType = 'Expense type is required';
 
         if (!values.Amount) errors.Amount = 'Amount is required';
         else if (!(/^[0-9]+([,.][0-9]+)?$/g).test(values.Amount.toString())) errors.Amount = 'Value must be a valid number';
@@ -45,12 +45,12 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
      * @param {*} values - the values object
      */
     const submit = (values) => {
-        if (expenseId === 0) dispatch.expense.createExpenseEntry(values);
+        if (!expenseId) dispatch.expense.createExpenseEntry(values);
         else dispatch.expense.updateExpenseEntry(values);
         toggleFunc(!show);
     };
 
-    const defaultValues = useSelector((state) => ((expenseId === 0) ? {} : state.expense.monthlyExpenseList.find((item) => item.Id === expenseId)));
+    const defaultValues = useSelector((state) => ((!expenseId) ? {} : state.expense.monthlyExpenseList.find((item) => item._id === expenseId)));
 
     const { formValues, errors, handleChange, handleSubmit, handleReset } = useForm(defaultValues, validate, submit);
 
@@ -61,7 +61,7 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
         <>
             <Modal size="lg" show={show} onHide={() => { toggleFunc(!show); handleReset(); }}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{expenseId === 0 ? 'Create New Expense' : 'Edit Expense'}</Modal.Title>
+                    <Modal.Title>{!expenseId ? 'Create New Expense' : 'Edit Expense'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={handleSubmit}>
@@ -77,18 +77,18 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
                             label="Expense Type"
                             options={expenseTypes}
                             displayField="ExpenseType"
-                            valueField="Id"
-                            value={formValues.ExpenseTypeId || 0}
+                            valueField="_id"
+                            value={(formValues.ExpenseType) ? formValues.ExpenseType._id : 0}
                             onChangeFunction={(event) => {
                                 handleChange({
                                     type: 'dropdown',
                                     target: {
-                                        name: 'ExpenseTypeId',
+                                        name: ['ExpenseType', '_id'],
                                         value: event
                                     }
                                 });
                             }}
-                            errorMessage={errors.ExpenseTypeId}
+                            errorMessage={errors.ExpenseType}
                         />
                         <Textbox
                             name="Amount"
@@ -110,7 +110,7 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
                             <Button
                                 color="primary"
                                 type="submit"
-                                label={expenseId === 0 ? 'Create' : 'Update'}
+                                label={!expenseId ? 'Create' : 'Update'}
                                 btnPaddingTop={2}
                                 btnPaddingBottom={2}
                             />
@@ -132,7 +132,7 @@ const ExpenseModal = ({ expenseId = 0, show = false, toggleFunc = null }) => {
 };
 
 ExpenseModal.propTypes = {
-    expenseId: proptypes.number.isRequired,
+    expenseId: proptypes.node,
     show: proptypes.bool.isRequired,
     toggleFunc: proptypes.func.isRequired
 };

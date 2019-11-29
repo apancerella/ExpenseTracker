@@ -1,3 +1,5 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
 import IncomeType from './incomeType';
 import ExpenseType from './expenseType';
@@ -8,41 +10,51 @@ import User from './user';
 import Account from './account';
 import seed from '../seed_data';
 
-export const connectDb = (dbString, eraseDatabaseOnSync) =>
-  mongoose.connect(dbString,
+const models = {
+    IncomeType,
+    ExpenseType,
+    Role,
+    MonthlyIncome,
+    MonthlyExpense,
+    User,
+    Account
+};
+
+export const connectDb = (dbString, eraseDatabaseOnSync) => mongoose.connect(dbString,
     {
-      useNewUrlParser: true
+        useCreateIndex: true,
+        useNewUrlParser: true
     })
     .then(async () => {
-      if (eraseDatabaseOnSync) {
-        await Promise.all([
-          models.IncomeType.deleteMany({}),
-          models.ExpenseType.deleteMany({}),
-          models.Role.deleteMany({}),
-          models.MonthlyIncome.deleteMany({}),
-          models.MonthlyExpense.deleteMany({}),
-          models.User.deleteMany({}),
-          models.Account.deleteMany({})
-        ]);
-    
-        await seed.createIncomeTypes();
-        await seed.createExpenseTypes();
-        await seed.createRoles();
-        await seed.createMonthlyIncomes();
-        await seed.createMonthlyExpenses();
-        await seed.createUsers();
-        await seed.createAccounts();
-      }
-    });;
+        console.log('Success: Database connected.');
+        if (eraseDatabaseOnSync) {
+            await Promise.all([
+                models.IncomeType.deleteMany({}),
+                models.ExpenseType.deleteMany({}),
+                models.Role.deleteMany({}),
+                models.MonthlyIncome.deleteMany({}),
+                models.MonthlyExpense.deleteMany({}),
+                models.User.deleteMany({}),
+                models.Account.deleteMany({})
+            ]).then(async () => {
+                await seed.createIncomeTypes();
+                await seed.createExpenseTypes();
+                await seed.createRoles();
+                await seed.createMonthlyIncomes();
+                await seed.createMonthlyExpenses();
+                await seed.createUsers();
+                await seed.createAccounts();
+            }).then(() =>
+                console.log('Success: Database synchronized')).catch((err) => {
+                console.log('Error: Unable to sync database', err);
+                throw err;
+            });
+        }
+    }).catch((err) => {
+        console.log('Error: Could not connect to database.', err);
+        console.log('Exiting now...');
+        process.exit();
+    });
 
-const models = { 
-  IncomeType,
-  ExpenseType,
-  Role,
-  MonthlyIncome,
-  MonthlyExpense,
-  User,
-  Account
-};
 
 export default models;

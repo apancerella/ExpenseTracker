@@ -28,7 +28,6 @@ export default class apiCalls {
     static Post = async (action) => {
         const response = await fetch(action.url, {
             method: 'post',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
@@ -44,7 +43,6 @@ export default class apiCalls {
     static Put = async (action) => {
         const response = await fetch(action.url, {
             method: 'put',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
@@ -60,7 +58,6 @@ export default class apiCalls {
     static Delete = async (action) => {
         const response = await fetch(action.url, {
             method: 'delete',
-            credentials: 'include',
             headers: {
                 'Cache-Control': 'no-cache',
                 pragma: 'no-cache'
