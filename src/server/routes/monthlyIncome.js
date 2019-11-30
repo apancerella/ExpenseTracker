@@ -13,6 +13,27 @@ router.get('/', async (req, res) => {
         });
 });
 
+router.get('/monthlyIncomeId', async (req, res) => {
+    await req.context.models.MonthlyIncome.findById(req.params.monthlyIncomeId)
+        .then((monthlyIncomeId) => {
+            if (!monthlyIncomeId) {
+                return res.status(404).send({
+                    message: `Monthly income not found with id ${req.params.monthlyIncomeId}`
+                });
+            }
+            res.send(monthlyIncomeId);
+        }).catch((err) => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: `Monthly income not found with id ${req.params.monthlyIncomeId}`
+                });
+            }
+            return res.status(500).send({
+                message: `Error retrieving monthly income with id ${req.params.monthlyIncomeId}`
+            });
+        });
+});
+
 router.post('/', async (req, res) => {
     if (!req._body) {
         return res.status(400).send({
