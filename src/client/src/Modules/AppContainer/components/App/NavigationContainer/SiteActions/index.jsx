@@ -18,10 +18,11 @@ const SiteActions = () => {
     const dispatch = useDispatch();
     const [showAccountModal, setShowAccountModal] = useState(false);
     const userAccount = useSelector((state) => state.user.account);
-    const dropdownTitle = Object.keys(userAccount).length ? `Welcome, ${userAccount.User.FirstName} ${userAccount.User.LastName}` : 'Unknown User';
+    const dropdownTitle = Object.keys(userAccount).length ? `Welcome, ${userAccount.FirstName} ${userAccount.LastName}` : 'Unknown User';
 
     useEffect(() => {
-        dispatch.user.fetchUserAccount();
+        // dispatch.user.fetchUserAccount();
+        dispatch.user.register();
     }, []);
 
     return (

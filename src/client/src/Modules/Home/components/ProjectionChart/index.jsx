@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 /**
  * DCSO chart that displays current metrics of a plan as a graph.
  * @author Anthony P. Pancerella
@@ -8,21 +10,23 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getProjectionChartData } from '../../services/selectors';
 
-var ReactHighcharts = require('react-highcharts');
-var HighchartsMore = require('highcharts-more');
+const ReactHighcharts = require('react-highcharts');
+const HighchartsMore = require('highcharts-more');
+
 HighchartsMore(ReactHighcharts.Highcharts);
 
-var HighchartsExporting = require('highcharts-exporting');
+const HighchartsExporting = require('highcharts-exporting');
+
 HighchartsExporting(ReactHighcharts.Highcharts);
 
 
 const ProjectionChart = () => {
-    const chartData = useSelector(state => getProjectionChartData(state));
+    const chartData = useSelector((state) => getProjectionChartData(state));
     const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    let date = new Date();
-    let currMonth = date.getMonth();
-    let options = {
+    const date = new Date();
+    const currMonth = date.getMonth();
+    const options = {
         chart: {
             type: 'line',
             height: '200',
@@ -55,15 +59,15 @@ const ProjectionChart = () => {
         },
         series: chartData,
         colors: ['#617487', '#1B502B']
-    }
+    };
 
     return (
-        <React.Fragment>
+        <>
             <div>
-                <ReactHighcharts config={options}></ReactHighcharts>
-                <br/>
+                <ReactHighcharts config={options} />
+                <br />
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

@@ -25,21 +25,21 @@ const expense = {
             return {
                 ...state,
                 monthlyExpenseList: [...state.monthlyExpenseList, expense]
-            }
+            };
         },
         updateExpense(state, expense) {
             return {
                 ...state,
                 monthlyExpenseList: state.monthlyExpenseList.map(
-                    item => item.Id === expense.Id ? { ...item, ...expense } : item
+                    (item) => (item.Id === expense.Id ? { ...item, ...expense } : item)
                 )
-            }
+            };
         },
         deleteExpense(state, id) {
             return {
-                ...state, 
-                monthlyExpenseList: state.monthlyExpenseList.filter(x => x.Id !== id)
-            }
+                ...state,
+                monthlyExpenseList: state.monthlyExpenseList.filter((x) => x.Id !== id)
+            };
         }
     },
     effects: (dispatch) => ({
@@ -48,7 +48,8 @@ const expense = {
                 this.populateExpenseList(
                     await Api.Get({ url: `${apiEndpoint}` })
                 );
-            } catch (error) {
+            }
+            catch (error) {
                 dispatch.notification.addErrorNotification('Unable to fetch monthly expenses.');
             }
         },
@@ -64,9 +65,9 @@ const expense = {
         },
         async createExpenseEntry(payload, state) {
             try {
-                await Api.Post({ url: `${apiEndpoint}`, body: payload })
+                await Api.Post({ url: `${apiEndpoint}`, body: payload });
                 this.fetchMonthlyExpenses();
-                dispatch.notification.addSuccessNotification('Expense entry has been created.');
+                dispatch.notification.addSuccessNotification(`The expense ${payload.Name} has been created.`);
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to created expense entry.');
@@ -74,22 +75,22 @@ const expense = {
         },
         async updateExpenseEntry(payload, state) {
             try {
-                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload })
+                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload });
                 this.fetchMonthlyExpenses();
-                dispatch.notification.addSuccessNotification('Expense entry has been updated.');
+                dispatch.notification.addSuccessNotification(`The expense ${payload.Name} has been updated.`);
             }
             catch (error) {
-                dispatch.notification.addErrorNotification('Unable to update income entry.');
+                dispatch.notification.addErrorNotification('Unable to update expense entry.');
             }
         },
         async deleteExpenseEntry(payload, state) {
             try {
-                await Api.Delete({ url: `${apiEndpoint}/${payload}` })
+                await Api.Delete({ url: `${apiEndpoint}/${payload.id}` });
                 this.fetchMonthlyExpenses();
-                dispatch.notification.addSuccessNotification('Expense entry has been deleted.');
+                dispatch.notification.addSuccessNotification(`${payload.name} has been deleted.`);
             }
             catch (error) {
-                dispatch.notification.addErrorNotification('Unable to delete income entry.');
+                dispatch.notification.addErrorNotification(`Unable to delete ${payload.name}.`);
             }
         }
     })

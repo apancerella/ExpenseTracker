@@ -4,7 +4,6 @@ import createRoles from './roles';
 import createMonthlyIncomes from './monthlyIncomes';
 import createMonthlyExpenses from './monthlyExpenses';
 import createUsers from './users';
-import createAccounts from './accounts';
 
 export default {
     createIncomeTypes,
@@ -12,6 +11,5 @@ export default {
     createRoles,
     createMonthlyIncomes,
     createMonthlyExpenses,
-    createUsers,
-    createAccounts
+    createUsers
 };

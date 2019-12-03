@@ -25,21 +25,21 @@ const income = {
             return {
                 ...state,
                 monthlyIncomeList: [...state.monthlyIncomeList, income]
-            }
+            };
         },
         updateIncome(state, income) {
             return {
                 ...state,
                 monthlyIncomeList: state.monthlyIncomeList.map(
-                    item => item.Id === income.Id ? { ...item, ...income } : item
+                    (item) => (item.Id === income.Id ? { ...item, ...income } : item)
                 )
-            }
+            };
         },
         deleteIncome(state, id) {
             return {
-                ...state, 
-                monthlyIncomeList: state.monthlyIncomeList.filter(x => x.Id !== id)
-            }
+                ...state,
+                monthlyIncomeList: state.monthlyIncomeList.filter((x) => x.Id !== id)
+            };
         }
     },
     effects: (dispatch) => ({
@@ -65,9 +65,9 @@ const income = {
         },
         async createIncomeEntry(payload, state) {
             try {
-                await Api.Post({ url: `${apiEndpoint}`, body: payload })
+                await Api.Post({ url: `${apiEndpoint}`, body: payload });
                 this.fetchMonthlyIncomes();
-                dispatch.notification.addSuccessNotification('Income entry has been created.');
+                dispatch.notification.addSuccessNotification(`The income ${payload.Name} has been created.`);
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to created income entry.');
@@ -75,9 +75,9 @@ const income = {
         },
         async updateIncomeEntry(payload, state) {
             try {
-                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload })
+                await Api.Put({ url: `${apiEndpoint}/${payload._id}`, body: payload });
                 this.fetchMonthlyIncomes();
-                dispatch.notification.addSuccessNotification('Income entry has been updated.');
+                dispatch.notification.addSuccessNotification(`The income ${payload.Name} has been updated.`);
             }
             catch (error) {
                 dispatch.notification.addErrorNotification('Unable to update income entry.');
@@ -85,12 +85,12 @@ const income = {
         },
         async deleteIncomeEntry(payload, state) {
             try {
-                await Api.Delete({ url: `${apiEndpoint}/${payload}` })
+                await Api.Delete({ url: `${apiEndpoint}/${payload.id}` });
                 this.fetchMonthlyIncomes();
-                dispatch.notification.addSuccessNotification('Income entry has been deleted.');
+                dispatch.notification.addSuccessNotification(`${payload.name} has been deleted.`);
             }
             catch (error) {
-                dispatch.notification.addErrorNotification('Unable to delete income entry.');
+                dispatch.notification.addErrorNotification(`Unable to delete ${payload.name}.`);
             }
         }
     })

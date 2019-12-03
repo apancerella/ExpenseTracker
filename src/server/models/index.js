@@ -7,7 +7,6 @@ import Role from './role';
 import MonthlyIncome from './monthlyIncome';
 import MonthlyExpense from './monthlyExpense';
 import User from './user';
-import Account from './account';
 import seed from '../seed_data';
 
 const models = {
@@ -16,8 +15,7 @@ const models = {
     Role,
     MonthlyIncome,
     MonthlyExpense,
-    User,
-    Account
+    User
 };
 
 export const connectDb = (dbString, eraseDatabaseOnSync) => mongoose.connect(dbString,
@@ -34,16 +32,13 @@ export const connectDb = (dbString, eraseDatabaseOnSync) => mongoose.connect(dbS
                 models.Role.deleteMany({}),
                 models.MonthlyIncome.deleteMany({}),
                 models.MonthlyExpense.deleteMany({}),
-                models.User.deleteMany({}),
-                models.Account.deleteMany({})
+                models.User.deleteMany({})
             ]).then(async () => {
                 await seed.createIncomeTypes();
                 await seed.createExpenseTypes();
                 await seed.createRoles();
                 await seed.createMonthlyIncomes();
                 await seed.createMonthlyExpenses();
-                await seed.createUsers();
-                await seed.createAccounts();
             }).then(() =>
                 console.log('Success: Database synchronized')).catch((err) => {
                 console.log('Error: Unable to sync database', err);

@@ -91,7 +91,7 @@ const MonthlyExpenseTable = () => {
                 color="danger"
                 type="button"
                 label="Delete"
-                onClick={() => dispatch.expense.deleteExpenseEntry(row._id)}
+                onClick={() => dispatch.expense.deleteExpenseEntry({ id: row._id, name: row.Name })}
                 btnPaddingTop={0}
                 btnPaddingBottom={0}
                 icon="trash-alt"

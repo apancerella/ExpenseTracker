@@ -83,7 +83,7 @@ const MonthlyIncomeTable = () => {
                 color="danger"
                 type="button"
                 label="Delete"
-                onClick={() => dispatch.income.deleteIncomeEntry(row._id)}
+                onClick={() => dispatch.income.deleteIncomeEntry({ id: row._id, name: row.Name })}
                 btnPaddingTop={0}
                 btnPaddingBottom={0}
                 icon="trash-alt"
