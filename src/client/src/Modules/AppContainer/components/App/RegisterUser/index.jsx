@@ -98,6 +98,7 @@ const RegisterUser = () => {
                                     name="Password"
                                     placeholder="Enter password"
                                     label=""
+                                    type="password"
                                     onChangeFunction={handleChange}
                                     value={formValues.Password || ''}
                                     inputState={(errors.Password) ? 'invalidFormInput' : ''}
@@ -109,6 +110,7 @@ const RegisterUser = () => {
                                     name="Password2"
                                     placeholder="Re-Enter Password"
                                     label=""
+                                    type="password"
                                     onChangeFunction={handleChange}
                                     value={formValues.Password2 || ''}
                                     inputState={(errors.Password2) ? 'invalidFormInput' : ''}
