@@ -21,7 +21,7 @@ import { useForm } from '../../../../Lib/CustomHooks';
  */
 const ExpenseModal = ({ expenseId, show = false, toggleFunc = null }) => {
     const dispatch = useDispatch();
-    const expenseTypes = useSelector((state) => state.expense.expenseTypes)
+    const expenseTypes = useSelector((state) => state.expense.expenseTypes);
 
     /**
      * Form validation function

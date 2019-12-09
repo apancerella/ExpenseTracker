@@ -40,6 +40,12 @@ const income = {
                 ...state,
                 monthlyIncomeList: state.monthlyIncomeList.filter((x) => x.Id !== id)
             };
+        },
+        reset(state) {
+            return {
+                ...state,
+                monthlyIncomeList: []
+            };
         }
     },
     effects: (dispatch) => ({

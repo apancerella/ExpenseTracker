@@ -12,6 +12,7 @@ const Textbox = ({
     name,
     label,
     value,
+    type = 'text',
     placeholder = '',
     disabled = false,
     labelPosition = 2,
@@ -28,7 +29,7 @@ const Textbox = ({
         <div className={`col-sm-${inputPosition}`}>
             <input
                 name={name}
-                type="text"
+                type={type}
                 className={`form-control ${inputState}`}
                 placeholder={placeholder}
                 value={value}
@@ -45,6 +46,7 @@ Textbox.propTypes = {
     name: proptypes.string.isRequired,
     label: proptypes.string.isRequired,
     value: proptypes.node.isRequired,
+    type: proptypes.string,
     placeholder: proptypes.string,
     disabled: proptypes.bool,
     labelPosition: proptypes.number,

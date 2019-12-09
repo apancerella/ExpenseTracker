@@ -32,7 +32,7 @@ export const connectDb = (dbString, eraseDatabaseOnSync) => mongoose.connect(dbS
                 models.Role.deleteMany({}),
                 models.MonthlyIncome.deleteMany({}),
                 models.MonthlyExpense.deleteMany({}),
-                models.User.deleteMany({})
+                // models.User.deleteMany({})
             ]).then(async () => {
                 await seed.createIncomeTypes();
                 await seed.createExpenseTypes();

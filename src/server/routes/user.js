@@ -11,7 +11,7 @@ import validateLoginInput from '../validation/login';
 const router = Router();
 
 router.get('/:id',
-    // passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         const users = await req.context.models.User.findById(req.params.id);// .populate('Role');
         return res.send(users);
@@ -58,16 +58,14 @@ router.post('/login', (req, res) => {
 
     req.context.models.User.findOne({ Email }).then((user) => {
         if (!user) {
-            return res.status(404).json({ emailnotfound: 'Email not found' });
+            return res.status(404).json({ message: 'Email not found' });
         }
 
         bcrypt.compare(Password, user.Password).then((isMatch) => {
             if (isMatch) {
-                const payload = {
-                    id: user.id,
-                    name: `${user.FirstName} ${user.LastName}`
-                };
-                // Sign token
+                const payload = { user };
+                payload.user.Password = undefined;
+
                 return jwt.sign(
                     payload,
                     AppConfigs.secret,
@@ -76,7 +74,7 @@ router.post('/login', (req, res) => {
                 );
             } 
 
-            return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+            return res.status(400).json({ message: 'Password incorrect' });
         });
     });
 });

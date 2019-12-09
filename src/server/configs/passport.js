@@ -17,7 +17,7 @@ module.exports = (passport) => {
                 return done('jwt expired');
             }
 
-            User.findById(jwtPayload.id)
+            User.findById(jwtPayload.user._id)
                 .then((user) => {
                     if (user) {
                         return done(null, user);

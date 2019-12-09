@@ -40,6 +40,12 @@ const expense = {
                 ...state,
                 monthlyExpenseList: state.monthlyExpenseList.filter((x) => x.Id !== id)
             };
+        },
+        reset(state) {
+            return {
+                ...state,
+                monthlyExpenseList: []
+            };
         }
     },
     effects: (dispatch) => ({
