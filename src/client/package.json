@@ -16,7 +16,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",
     "env-cmd": "^10.0.1",
-    "highcharts": "^7.2.0",
+    "highcharts": "^9.0.0",
     "highcharts-drilldown": "^0.1.7",
     "highcharts-exporting": "^0.1.7",
     "highcharts-more": "^0.1.7",
